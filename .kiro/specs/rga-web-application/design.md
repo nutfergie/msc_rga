@@ -288,8 +288,8 @@ export const lineItemsWithCancelQtyState = atom({
 **Local State**:
 ```javascript
 {
-  orderYear: '',          // string - ปีคำสั่งซื้อ
-  orderNumber: '',        // string - หมายเลขคำสั่งซื้อ
+  orderYear: 0,           // number - ปีคำสั่งซื้อ (2 หลัก เช่น 24)
+  orderNumber: 0,         // number - หมายเลขคำสั่งซื้อ
   loading: false,         // boolean - สถานะกำลังโหลด
   error: null            // string | null - ข้อความ error
 }
@@ -381,8 +381,8 @@ export const lineItemsWithCancelQtyState = atom({
 ```javascript
 // Order object structure
 {
-  orderYear: '',        // string
-  orderNumber: '',      // string
+  orderYear: 0,         // number - ปี พ.ศ. 2 หลัก (เช่น 24 สำหรับ 2567)
+  orderNumber: 0,       // number - หมายเลขคำสั่งซื้อ
   orderDate: '',        // string (optional)
   customerName: '',     // string (optional)
   lineItems: []         // array of LineItem
@@ -442,8 +442,8 @@ export const lineItemsWithCancelQtyState = atom({
 ```javascript
 // RGASubmitRequest object structure
 {
-  orderYear: '',        // string
-  orderNumber: '',      // string
+  orderYear: 0,         // number - ปี พ.ศ. 2 หลัก
+  orderNumber: 0,       // number - หมายเลขคำสั่งซื้อ
   mainReasonId: '',     // string
   subReasonId: '',      // string
   lineItems: [          // array
@@ -461,8 +461,8 @@ export const lineItemsWithCancelQtyState = atom({
 // RGADocument object structure
 {
   rgaNumber: '',        // string
-  orderYear: '',        // string
-  orderNumber: '',      // string
+  orderYear: 0,         // number - ปี พ.ศ. 2 หลัก
+  orderNumber: 0,       // number - หมายเลขคำสั่งซื้อ
   createdDate: '',      // string
   status: ''            // string
 }
@@ -496,8 +496,8 @@ import API_CONFIG from '../config/apiConfig';
 
 /**
  * ค้นหาคำสั่งซื้อจากปีและหมายเลข
- * @param {string} orderYear - ปีคำสั่งซื้อ
- * @param {string} orderNumber - หมายเลขคำสั่งซื้อ
+ * @param {number} orderYear - ปีคำสั่งซื้อ (2 หลัก)
+ * @param {number} orderNumber - หมายเลขคำสั่งซื้อ
  * @returns {Promise<Object>} Order object
  */
 export async function fetchOrder(orderYear, orderNumber) {
@@ -558,21 +558,25 @@ export async function submitRGA(request) {
 
 /**
  * ตรวจสอบความถูกต้องของข้อมูลการค้นหาคำสั่งซื้อ
- * @param {string} orderYear - ปีคำสั่งซื้อ
- * @param {string} orderNumber - หมายเลขคำสั่งซื้อ
+ * @param {number} orderYear - ปีคำสั่งซื้อ (2 หลัก)
+ * @param {number} orderNumber - หมายเลขคำสั่งซื้อ
  * @returns {string|null} ข้อความ error หรือ null ถ้าถูกต้อง
  */
 export function validateOrderSearch(orderYear, orderNumber) {
-  if (!orderYear || orderYear.trim() === '') {
+  if (!orderYear || orderYear === 0) {
     return 'กรุณากรอกปีคำสั่งซื้อ';
   }
   
-  if (!orderNumber || orderNumber.trim() === '') {
+  if (!orderNumber || orderNumber === 0) {
     return 'กรุณากรอกหมายเลขคำสั่งซื้อ';
   }
   
-  if (!/^\d{4}$/.test(orderYear)) {
-    return 'ปีคำสั่งซื้อต้องเป็นตัวเลข 4 หลัก';
+  if (!Number.isInteger(orderYear) || orderYear < 0 || orderYear > 99) {
+    return 'ปีคำสั่งซื้อต้องเป็นตัวเลข 2 หลัก (0-99)';
+  }
+  
+  if (!Number.isInteger(orderNumber) || orderNumber < 0) {
+    return 'หมายเลขคำสั่งซื้อต้องเป็นตัวเลขที่มากกว่า 0';
   }
   
   return null;
@@ -662,8 +666,8 @@ import { fetchOrder } from '../services/api';
 import { validateOrderSearch } from '../utils/validation';
 
 function OrderSearch({ onOrderFound }) {
-  const [orderYear, setOrderYear] = useState('');
-  const [orderNumber, setOrderNumber] = useState('');
+  const [orderYear, setOrderYear] = useState(0);
+  const [orderNumber, setOrderNumber] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
@@ -777,8 +781,8 @@ export default LineItemsTable;
 {
   "orders": [
     {
-      "orderYear": "2024",
-      "orderNumber": "SO001",
+      "orderYear": 24,
+      "orderNumber": 145,
       "orderDate": "2024-01-15",
       "customerName": "บริษัท ABC จำกัด",
       "lineItems": [
@@ -1156,9 +1160,9 @@ describe('Property Tests - Order Search Validation', () => {
     fc.assert(
       fc.property(
         fc.record({
-          orderYear: fc.oneof(fc.constant(''), fc.string()),
-          orderNumber: fc.oneof(fc.constant(''), fc.string())
-        }).filter(data => data.orderYear === '' || data.orderNumber === ''),
+          orderYear: fc.oneof(fc.constant(0), fc.integer()),
+          orderNumber: fc.oneof(fc.constant(0), fc.integer())
+        }).filter(data => data.orderYear === 0 || data.orderNumber === 0),
         (incompleteData) => {
           const error = validateOrderSearch(
             incompleteData.orderYear,

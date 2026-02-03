@@ -1,0 +1,166 @@
+{
+  "orders": [
+    {
+      "orderYear": 24,
+      "orderNumber": 145,
+      "orderDate": "2024-01-15",
+      "customerName": "บริษัท ABC จำกัด",
+      "lineItems": [
+        {
+          "itemId": "1",
+          "itemCode": "ITEM001",
+          "itemName": "สินค้า A",
+          "quantity": 10,
+          "unitPrice": 100
+        },
+        {
+          "itemId": "2",
+          "itemCode": "ITEM002",
+          "itemName": "สินค้า B",
+          "quantity": 5,
+          "unitPrice": 200
+        },
+        {
+          "itemId": "3",
+          "itemCode": "ITEM003",
+          "itemName": "สินค้า C",
+          "quantity": 8,
+          "unitPrice": 150
+        }
+      ]
+    },
+    {
+      "orderYear": 24,
+      "orderNumber": 146,
+      "orderDate": "2024-02-20",
+      "customerName": "บริษัท XYZ จำกัด",
+      "lineItems": [
+        {
+          "itemId": "4",
+          "itemCode": "ITEM004",
+          "itemName": "สินค้า D",
+          "quantity": 15,
+          "unitPrice": 250
+        },
+        {
+          "itemId": "5",
+          "itemCode": "ITEM005",
+          "itemName": "สินค้า E",
+          "quantity": 20,
+          "unitPrice": 180
+        }
+      ]
+    },
+    {
+      "orderYear": 23,
+      "orderNumber": 147,
+      "orderDate": "2023-12-10",
+      "customerName": "บริษัท DEF จำกัด",
+      "lineItems": [
+        {
+          "itemId": "6",
+          "itemCode": "ITEM006",
+          "itemName": "สินค้า F",
+          "quantity": 12,
+          "unitPrice": 300
+        }
+      ]
+    }
+  ],
+  "rgaReasons": [
+    {
+      "mainReasonId": "M1",
+      "mainReasonName": "สินค้าชำรุด",
+      "subReasons": [
+        {
+          "subReasonId": "S1-1",
+          "subReasonName": "แตกหัก"
+        },
+        {
+          "subReasonId": "S1-2",
+          "subReasonName": "เสียหาย"
+        },
+        {
+          "subReasonId": "S1-3",
+          "subReasonName": "มีรอยขีดข่วน"
+        }
+      ]
+    },
+    {
+      "mainReasonId": "M2",
+      "mainReasonName": "สั่งผิด",
+      "subReasons": [
+        {
+          "subReasonId": "S2-1",
+          "subReasonName": "สั่งผิดรุ่น"
+        },
+        {
+          "subReasonId": "S2-2",
+          "subReasonName": "สั่งผิดจำนวน"
+        },
+        {
+          "subReasonId": "S2-3",
+          "subReasonName": "สั่งผิดสี"
+        }
+      ]
+    },
+    {
+      "mainReasonId": "M3",
+      "mainReasonName": "ไม่ตรงตามที่สั่ง",
+      "subReasons": [
+        {
+          "subReasonId": "S3-1",
+          "subReasonName": "ได้รับสินค้าผิดรุ่น"
+        },
+        {
+          "subReasonId": "S3-2",
+          "subReasonName": "ได้รับสินค้าผิดสี"
+        },
+        {
+          "subReasonId": "S3-3",
+          "subReasonName": "ได้รับสินค้าผิดขนาด"
+        }
+      ]
+    },
+    {
+      "mainReasonId": "M4",
+      "mainReasonName": "ลูกค้าเปลี่ยนใจ",
+      "subReasons": [
+        {
+          "subReasonId": "S4-1",
+          "subReasonName": "ไม่ต้องการแล้ว"
+        },
+        {
+          "subReasonId": "S4-2",
+          "subReasonName": "พบสินค้าที่ดีกว่า"
+        },
+        {
+          "subReasonId": "S4-3",
+          "subReasonName": "ราคาแพงเกินไป"
+        }
+      ]
+    }
+  ],
+  "rgaDocuments": [
+    {
+      "rgaNumber": "6900000001",
+      "orderYear": 69,
+      "orderNumber": 1,
+      "mainReasonId": "1",
+      "subReasonId": "1-1",
+      "remark": "ของเสียหาย",
+      "lineItems": [
+        {
+          "lineNo": "10",
+          "productCode": "PROD-001",
+          "productName": "Product A",
+          "orderedQty": 10,
+          "cancelQty": 5,
+          "unitPrice": 100
+        }
+      ],
+      "createdDate": "2026-02-02T09:48:09.710Z",
+      "status": "pending"
+    }
+  ]
+}

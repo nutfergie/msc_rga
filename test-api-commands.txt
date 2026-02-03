@@ -1,0 +1,185 @@
+# RGA Mock API Test Commands
+# Copy และรันใน terminal
+
+# ========================================
+# Test 1: POST /order - ค้นหาคำสั่งซื้อที่มีอยู่ (Success)
+# ========================================
+curl -X POST http://localhost:4001/order \
+  -H "Content-Type: application/json" \
+  -d '{"orderYear": 24, "orderNumber": 145}'
+
+# ========================================
+# Test 2: POST /order - ค้นหาคำสั่งซื้อที่ไม่มี (Not Found)
+# ========================================
+curl -X POST http://localhost:4001/order \
+  -H "Content-Type: application/json" \
+  -d '{"orderYear": 99, "orderNumber": 999}'
+
+# ========================================
+# Test 3: POST /order - ข้อมูลไม่ครบ (Missing orderNumber)
+# ========================================
+curl -X POST http://localhost:4001/order \
+  -H "Content-Type: application/json" \
+  -d '{"orderYear": 24}'
+
+# ========================================
+# Test 4: POST /order - ทดสอบ order อื่นๆ
+# ========================================
+curl -X POST http://localhost:4001/order \
+  -H "Content-Type: application/json" \
+  -d '{"orderYear": 24, "orderNumber": 146}'
+
+curl -X POST http://localhost:4001/order \
+  -H "Content-Type: application/json" \
+  -d '{"orderYear": 23, "orderNumber": 147}'
+
+# ========================================
+# Test 5: POST /rgaReason - ดึงรายการเหตุผล RGA
+# ========================================
+curl -X POST http://localhost:4001/rgaReason \
+  -H "Content-Type: application/json"
+
+# ========================================
+# Test 6: POST /rgaSubmit - สร้าง RGA document (Success)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 145,
+    "mainReasonId": "M1",
+    "subReasonId": "S1-1",
+    "remark": "สินค้าชำรุด แตกหัก",
+    "lineItems": [
+      {
+        "itemId": "1",
+        "cancelQty": 5
+      },
+      {
+        "itemId": "2",
+        "cancelQty": 3
+      }
+    ]
+  }'
+
+# ========================================
+# Test 7: POST /rgaSubmit - ไม่มี mainReasonId (Error)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 145,
+    "subReasonId": "S1-1",
+    "lineItems": [
+      {
+        "itemId": "1",
+        "cancelQty": 5
+      }
+    ]
+  }'
+
+# ========================================
+# Test 8: POST /rgaSubmit - ไม่มี subReasonId (Error)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 145,
+    "mainReasonId": "M1",
+    "lineItems": [
+      {
+        "itemId": "1",
+        "cancelQty": 5
+      }
+    ]
+  }'
+
+# ========================================
+# Test 9: POST /rgaSubmit - lineItems ว่าง (Error)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 145,
+    "mainReasonId": "M1",
+    "subReasonId": "S1-1",
+    "lineItems": []
+  }'
+
+# ========================================
+# Test 10: POST /rgaSubmit - cancelQty = 0 ทั้งหมด (Error)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 145,
+    "mainReasonId": "M1",
+    "subReasonId": "S1-1",
+    "lineItems": [
+      {
+        "itemId": "1",
+        "cancelQty": 0
+      }
+    ]
+  }'
+
+# ========================================
+# Test 11: POST /rgaSubmit - ไม่มี orderYear (Error)
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderNumber": 145,
+    "mainReasonId": "M1",
+    "subReasonId": "S1-1",
+    "lineItems": [
+      {
+        "itemId": "1",
+        "cancelQty": 5
+      }
+    ]
+  }'
+
+# ========================================
+# Test 12: POST /rgaSubmit - สร้าง RGA หลายตัวเพื่อทดสอบ RGA Number generation
+# ========================================
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 24,
+    "orderNumber": 146,
+    "mainReasonId": "M2",
+    "subReasonId": "S2-1",
+    "remark": "สั่งผิดรุ่น",
+    "lineItems": [
+      {
+        "itemId": "4",
+        "cancelQty": 10
+      }
+    ]
+  }'
+
+curl -X POST http://localhost:4001/rgaSubmit \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderYear": 23,
+    "orderNumber": 147,
+    "mainReasonId": "M3",
+    "subReasonId": "S3-1",
+    "remark": "ได้รับสินค้าผิดรุ่น",
+    "lineItems": [
+      {
+        "itemId": "6",
+        "cancelQty": 8
+      }
+    ]
+  }'
+
+# ========================================
+# Test 13: ดู RGA Documents ทั้งหมดที่สร้างไว้
+# ========================================
+curl -X GET http://localhost:4001/rgaDocuments

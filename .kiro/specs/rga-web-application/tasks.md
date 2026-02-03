@@ -7,20 +7,20 @@
 ## Tasks
 
 - [ ] 1. ตั้งค่า Mock API ด้วย JSON Server (PRIORITY)
-  - [ ] 1.1 ติดตั้ง JSON Server และสร้างโครงสร้างไฟล์
+  - [x] 1.1 ติดตั้ง JSON Server และสร้างโครงสร้างไฟล์
     - ติดตั้ง json-server เป็น dev dependency
     - สร้างโฟลเดอร์ `mock-api/`
     - สร้างไฟล์ `mock-api/db.json` พร้อมข้อมูล orders, rgaReasons, และ rgaDocuments
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-  - [ ] 1.2 สร้าง custom server สำหรับ JSON Server
+  - [x] 1.2 สร้าง custom server สำหรับ JSON Server
     - สร้างไฟล์ `mock-api/server.js`
     - เขียน middleware สำหรับ POST `/order` endpoint (รับ orderYear และ orderNumber, ค้นหาและส่งข้อมูลคำสั่งซื้อกลับ)
     - เขียน middleware สำหรับ POST `/rgaReason` endpoint (ส่งรายการเหตุผล RGA ทั้งหมด)
     - เขียน middleware สำหรับ POST `/rgaSubmit` endpoint (สร้าง RGA document พร้อมหมายเลข RGA และบันทึกลง database)
     - _Requirements: 5.2, 5.3, 5.4, 6.5_
 
-  - [ ] 1.3 เพิ่ม script สำหรับรัน Mock API
+  - [x] 1.3 เพิ่ม script สำหรับรัน Mock API
     - เพิ่ม script `"mock-api": "node mock-api/server.js"` ใน package.json
     - ทดสอบรัน Mock API บน port 3001
     - ทดสอบเรียก endpoints ทั้ง 3 ตัวด้วย Postman หรือ curl
@@ -40,13 +40,13 @@
     - ตั้งค่า Vite config สำหรับ development
     - _Requirements: 6.1, 6.2_
 
-  - [ ] 2.2 ติดตั้ง MUI และ Recoil
+  - [x] 2.2 ติดตั้ง MUI และ Recoil
     - ติดตั้ง @mui/material, @emotion/react, @emotion/styled
     - ติดตั้ง recoil
     - ติดตั้ง react-router-dom สำหรับ navigation
     - _Requirements: 6.3_
 
-  - [ ] 2.3 ติดตั้ง testing libraries
+  - [-] 2.3 ติดตั้ง testing libraries
     - ติดตั้ง vitest, @testing-library/react, @testing-library/jest-dom
     - ติดตั้ง @testing-library/user-event
     - ติดตั้ง fast-check สำหรับ property-based testing

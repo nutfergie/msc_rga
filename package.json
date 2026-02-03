@@ -1,0 +1,45 @@
+{
+  "name": "rga-web-application",
+  "version": "1.0.0",
+  "description": "RGA (Return Goods Authorization) Web Application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "mock-api": "node mock-api/server.cjs"
+  },
+  "keywords": [
+    "rga",
+    "return-goods",
+    "authorization"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
+    "fast-check": "^4.5.3",
+    "jsdom": "^28.0.0",
+    "json-server": "^0.17.4",
+    "msw": "^2.12.7",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.7",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.0",
+    "recoil": "^0.7.7"
+  }
+}
